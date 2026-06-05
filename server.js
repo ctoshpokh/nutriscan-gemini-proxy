@@ -11,7 +11,7 @@ const API_KEY = process.env.GEMINI_API_KEY;
 
 // This wildcard catch-all handles ANY model version your phone tries to call
 app.post('/v1beta/models/*', (req, res) => {
-    // Extracts whatever model path your phone sent (e.g., "gemini-1.5-flash-latest:generateContent")
+    // Extracts whatever model path your phone sent (e.g., "gemini-2.5-flash:generateContent")
     const modelPath = req.params[0]; 
 
     const options = {
