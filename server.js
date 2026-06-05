@@ -9,10 +9,14 @@ app.use(express.json());
 const PORT = process.env.PORT || 10000;
 const API_KEY = process.env.GEMINI_API_KEY;
 
-app.post('/v1beta/models/gemini-2.5-flash:generateContent', (req, res) => {
+// This wildcard catch-all handles ANY model version your phone tries to call
+app.post('/v1beta/models/*', (req, res) => {
+    // Extracts whatever model path your phone sent (e.g., "gemini-1.5-flash-latest:generateContent")
+    const modelPath = req.params[0]; 
+
     const options = {
         hostname: 'generativelanguage.googleapis.com',
-        path: `/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`,
+        path: `/v1beta/models/${modelPath}?key=${API_KEY}`,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -33,5 +37,5 @@ app.post('/v1beta/models/gemini-2.5-flash:generateContent', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Proxy running on port ${PORT}`);
+    console.log(`Universal Proxy running on port ${PORT}`);
 });
